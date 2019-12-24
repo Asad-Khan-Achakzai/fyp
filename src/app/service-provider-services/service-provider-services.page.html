@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>service-provider-services</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-card>
+      <ion-card-header>
+        <div class="title">
+          <ion-card-title size="large" text-center>Routes</ion-card-title>
+        </div>
+
+
+      </ion-card-header>
+    </ion-card>
+    <div>
+      <div>
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">
+                From
+              </ion-label>
+              <ion-input type="text" formControlName="departure">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">
+                Destination
+              </ion-label>
+              <ion-input type="text" formControlName="destination">
+              </ion-input>
+            </ion-item>
+            <ion-item lines="none" float-right>
+              <ion-button (click)="enterToTheList()">
+                Submit</ion-button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <!-- list of Routes Added -->
+    <div>
+      <div>
+        <ion-card>
+          <ion-card-content>
+            <div class="thumnails">
+              <ion-list>
+                <ion-menu-toggle auto-hide="false" *ngFor="let item of routes">
+                  <ion-item>
+                    <ion-label id="listLabels">
+                      From {{item?.Departure}} To {{item?.Destination}}
+
+                      <ion-icon name="trash" slot="end" (click)="delet(item)"></ion-icon>
+
+                    </ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+              </ion-list>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <ion-button (click)="nextButton()">
+            Next
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
