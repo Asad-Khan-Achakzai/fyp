@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {CustomerService} from '../../sdk/custom/customer.service';
 
 @Component({
   selector: 'app-service-provider-signup',
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ServiceProviderSignupPage implements OnInit {
   Form: FormGroup;
-  constructor( private formBuilder: FormBuilder,private router :Router) { }
+  loading = false;
+  constructor( private formBuilder: FormBuilder,private router :Router,private customerService: CustomerService) { }
   cities = ['quetta','peshawer'];
   ngOnInit() {
     this.formInitializer();}
@@ -22,19 +24,14 @@ export class ServiceProviderSignupPage implements OnInit {
         email: [null, [Validators.required,Validators.email]],
         password: [null, [Validators.required]],
         phone: [null, [Validators.required,Validators.minLength(12)]],
-        confirmPassword: [null, [Validators.required]],
-        code: [],
+       // confirmPassword: [null, [Validators.required]]
         tags: [[]],
-        serviceFrom: [],
-        serviceDestination: []
+     
       });
   }
   upload(form) {
-    console.log(form.tags);
-    form.tags = this.tagArrayToString(form.tags);
-    console.log(form.tags);
+    console.log(this.Form.value);
   }
-
   tagArrayToString(tagArray: string[]): string {
     if (Array.isArray(tagArray) && tagArray.length > 0) {
       const tags = tagArray.map((e: any) => `[${e.value}]`);
@@ -45,6 +42,18 @@ export class ServiceProviderSignupPage implements OnInit {
     }
   }
   nextButton(){
+    
+    // this.customerService.serviceProviderRegister(this.Form.value).subscribe(
+    //   data => {
+    //     console.log('got response from server', data);
+    //     this.loading = false;
+    //   },
+    //   error => {
+    //     this.loading = false;
+    //     console.log('error', error);
+    //   }
+    // );
+   this.customerService.provideServices(this.Form.value);
     this.router.navigateByUrl('/service-provider-services');
   }
 }

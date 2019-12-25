@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="form">
+  <form [formGroup]="Form">
     <ion-card>
       <ion-card-header>
         <div class="title">
@@ -23,14 +23,14 @@
               <ion-label position="floating">
                 From
               </ion-label>
-              <ion-input type="text" formControlName="departure">
+              <ion-input type="text"  [(ngModel)] = "departureValue" [ngModelOptions]="{standalone: true}">
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating">
                 Destination
               </ion-label>
-              <ion-input type="text" formControlName="destination">
+              <ion-input type="text"  [(ngModel)] = "destinationValue" [ngModelOptions]="{standalone: true}">
               </ion-input>
             </ion-item>
             <ion-item lines="none" float-right>
@@ -48,7 +48,7 @@
           <ion-card-content>
             <div class="thumnails">
               <ion-list>
-                <ion-menu-toggle auto-hide="false" *ngFor="let item of routes">
+                <ion-menu-toggle auto-hide="false" *ngFor="let item of routesCopy">
                   <ion-item>
                     <ion-label id="listLabels">
                       From {{item?.Departure}} To {{item?.Destination}}

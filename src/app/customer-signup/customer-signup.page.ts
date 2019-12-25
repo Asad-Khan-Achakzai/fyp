@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {CustomerService} from '../../sdk/custom/customer.service';
 
 @Component({
   selector: 'app-customer-signup',
@@ -8,7 +9,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class CustomerSignupPage implements OnInit {
   Form: FormGroup;
-  constructor( private formBuilder: FormBuilder) { }
+  loading = false;
+  constructor( private formBuilder: FormBuilder,private customerService: CustomerService) { }
 
   ngOnInit() {
     this.formInitializer();}
@@ -19,8 +21,22 @@ export class CustomerSignupPage implements OnInit {
         email: [null, [Validators.required,Validators.email]],
         password: [null, [Validators.required]],
         phone: [null, [Validators.required,Validators.minLength(12)]],
-        confirmPassword: [null, [Validators.required]],
+        //confirmPassword: [null, [Validators.required]],
       });
   }
+  signUpButton(){
+    //this.loading = true;
 
+    this.customerService.userRegister(this.Form.value).subscribe(
+      data => {
+        console.log('got response from server', data);
+        this.loading = false;
+       // this.router.navigateByUrl('/home');
+      },
+      error => {
+        this.loading = false;
+        console.log('error', error);
+      }
+    );
+  }
 }
