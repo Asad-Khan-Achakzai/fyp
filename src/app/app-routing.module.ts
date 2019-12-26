@@ -16,6 +16,14 @@ const routes: Routes = [
     path: 'service-provider-services',
     loadChildren: () => import('./service-provider-services/service-provider-services.module').then( m => m.ServiceProviderServicesPageModule)
   },
+  {
+    path: 'customer-profile',
+    loadChildren: () => import('./customer-profile/customer-profile.module').then( m => m.CustomerProfilePageModule)
+  },
+  {
+    path: 'serviceprovider-profile',
+    loadChildren: () => import('./serviceprovider-profile/serviceprovider-profile.module').then( m => m.ServiceproviderProfilePageModule)
+  },
 ];
 
 @NgModule({
