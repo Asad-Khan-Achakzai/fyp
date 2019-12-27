@@ -44,7 +44,7 @@ Form: FormGroup;
         console.log('got response from server', data);
        this.router.navigateByUrl('/customer-profile');
       },
-      async error => {
+       async error => {
        // this.loading = false;
        const alert = await this.alertController.create({
         header: 'Alert',
