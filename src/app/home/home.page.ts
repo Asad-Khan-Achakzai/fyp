@@ -4,6 +4,7 @@ import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-acce
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerService } from 'src/sdk/custom/customer.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { CustomerService } from 'src/sdk/custom/customer.service';
 export class HomePage {
 
 Form: FormGroup;
-  constructor(private router :Router, private formBuilder: FormBuilder,private customerService: CustomerService) {}
+  constructor(private router :Router, private formBuilder: FormBuilder,private customerService: CustomerService,public alertController: AlertController) {}
   ngOnInit() {
     this.formInitializer();}
     formInitializer() {
@@ -43,9 +44,18 @@ Form: FormGroup;
         console.log('got response from server', data);
        this.router.navigateByUrl('/customer-profile');
       },
-      error => {
+      async error => {
        // this.loading = false;
-        console.log('error', error);
+       const alert = await this.alertController.create({
+        header: 'Alert',
+        //subHeader: 'Subtitle',
+        message: error.error.message,
+        buttons: ['OK']
+      });
+        alert.present();
+        //this.books.addBook(this.nameText, this.authorText);
+      
+        console.log('error', error.error.message);
       } );}
       else{
         console.log('loginData', loginData);
@@ -54,9 +64,19 @@ Form: FormGroup;
             console.log('got response from server', data);
            this.router.navigateByUrl('/serviceprovider-profile');
           },
-          error => {
+          async error => {
            // this.loading = false;
-            console.log('error', error);
+           
+           const alert = await this.alertController.create({
+            header: 'Alert',
+            //subHeader: 'Subtitle',
+            message: error.error.message,
+            buttons: ['OK']
+          });
+            alert.present();
+
+
+           
           } );
       }
      }
